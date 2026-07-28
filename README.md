@@ -11,3 +11,6 @@ I hope ❤️
 🌐 Proxy and Web Viewport: The browser includes virtual tab capabilities and frame/viewport embedding designed to handle external URLs and web search engines like DuckDuckGo, Google, and Bing.
 
 Made by ANII/Bong74300
+
+# Games 🎮 
+Credits: Gn-math, Truffled.lol, and Dogeub.
