@@ -9,9 +9,3 @@ I hope ❤️
 🚀 Project Purpose: The Galaxy Browser is an immersive web interface designed with a cosmic theme, featuring a virtual tab management system, address bar navigation, and custom dashboard sections.
 
 🌐 Proxy and Web Viewport: The browser includes virtual tab capabilities and frame/viewport embedding designed to handle external URLs and web search engines like DuckDuckGo, Google, and Bing.
-
-📱 Apps Dashboard: It features a dedicated applications section allowing quick access to popular web tools and services.
-
-🎮 Games Dashboard: The interface contains an arcade center section built to organize and display games within the browser's dashboard.
-
-Made by ANII/BONG74300
