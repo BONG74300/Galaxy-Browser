@@ -16,3 +16,10 @@ Will not last long probably till April 20, 2027! Anyways, The movies is up to da
 
 # Apps 
 Has 24 apps that you can Use and they work through an iframe! (Duh!)
+
+WTH AM I SO STUPID!
+I published the Readme.md! Don't worry You'll be fine
+Ignore the link on top
+
+# Links
+
