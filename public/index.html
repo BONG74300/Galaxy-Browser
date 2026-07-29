@@ -379,61 +379,6 @@
             color: #ffffff;
         }
 
-        /* Movie Poster & Game Hover Cards (No Border, Clear Text Order, Leads to Nowhere) */
-        .movie-card {
-            position: relative;
-            background: var(--bg-card);
-            border: none;
-            border-radius: 16px;
-            overflow: hidden;
-            aspect-ratio: 2/3;
-            cursor: default;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .movie-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: filter 0.3s ease, transform 0.3s ease;
-        }
-
-        .movie-card .movie-title {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 800;
-            color: #ffffff;
-            background: rgba(5, 5, 17, 0.75);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-            line-height: 1.4;
-            pointer-events: none;
-        }
-
-        .movie-card:hover img {
-            filter: blur(6px);
-            transform: scale(1.05);
-        }
-
-        .movie-card:hover .movie-title {
-            opacity: 1;
-        }
-
-        .movie-card:hover {
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
         /* Settings Console */
         .settings-panel {
             background: var(--bg-card);
@@ -507,6 +452,60 @@
             background: var(--accent-cyan);
             color: #000;
         }
+
+        /* Embedded Frame Modal / View */
+        #frame-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 3, 10, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #frame-modal.active {
+            display: flex;
+        }
+
+        .frame-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .frame-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .frame-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .frame-container {
+            flex: 1;
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .frame-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -531,8 +530,6 @@
     <h3>Galaxy</h3>
     <div class="sidebar-item active" onclick="switchSidebarTab('home')"><i class="fa-solid fa-house"></i> Home</div>
     <div class="sidebar-item" onclick="switchSidebarTab('apps')"><i class="fa-solid fa-cubes"></i> Apps</div>
-    <div class="sidebar-item" onclick="switchSidebarTab('movies')"><i class="fa-solid fa-film"></i> Movies</div>
-    <div class="sidebar-item" onclick="switchSidebarTab('tvshows')"><i class="fa-solid fa-tv"></i> TV Shows</div>
     <div class="sidebar-item" onclick="switchSidebarTab('settings')"><i class="fa-solid fa-sliders"></i> Settings</div>
 </div>
 
@@ -577,48 +574,99 @@
             <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Launch web tools directly.</p>
             
             <div class="section-title"><i class="fa-solid fa-server"></i> Popular Apps</div>
-            <div class="card-grid" style="width: 100%; margin-bottom: 40px;">
-                <div class="card" onclick="quickLaunch('https://discord.com')">
-                    <i class="fa-brands fa-discord"></i>
-                    <span>Discord</span>
-                </div>
+            <div class="card-grid" style="width: 100%; margin-bottom: 20px;">
                 <div class="card" onclick="quickLaunch('https://spotify.com')">
-                    <i class="fa-brands fa-spotify"></i>
+                    <i class="fa-brands fa-spotify" style="color: #1DB954;"></i>
                     <span>Spotify</span>
                 </div>
-            </div>
-        </div>
-
-        <div id="movies-sec" class="dashboard-section" style="display: none; width: 100%; max-width: 800px; flex-direction: column; align-items: center;">
-            <h1 style="text-align: center; font-weight: 900; font-size: 38px; margin-bottom: 5px;">Movies & TV Shows</h1>
-            <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Stream cinematic features and series.</p>
-            
-            <div class="centered-search-container" style="margin-bottom: 25px;">
-                <input id="mediaSearchInput" class="centered-search-box" placeholder="Search movies and TV shows..." oninput="filterMediaCards()">
-                <button class="centered-go-btn" style="pointer-events: none;"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
-            <div class="section-title"><i class="fa-solid fa-film"></i> Available Library</div>
-            <div class="card-grid" id="mediaGrid" style="width: 100%; margin-bottom: 40px;">
-                <div class="movie-card" data-title="deadpool and wolverine">
-                    <img src="https://cdn.jsdelivr.net/gh/dino-cmxy/Chillkirbcentrall@main/dp3_1sht_digital_srgb_ka_swords_v5_resized.jpg" alt="Deadpool & Wolverine">
-                    <div class="movie-title">Deadpool & Wolverine</div>
+                <div class="card" onclick="quickLaunch('https://discord.com')">
+                    <i class="fa-brands fa-discord" style="color: #5865F2;"></i>
+                    <span>Discord</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://netflix.com')">
+                    <i class="fa-solid fa-film" style="color: #E50914;"></i>
+                    <span>Netflix</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://twitch.tv')">
+                    <i class="fa-brands fa-twitch" style="color: #9146FF;"></i>
+                    <span>Twitch</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://reddit.com')">
+                    <i class="fa-brands fa-reddit" style="color: #FF4500;"></i>
+                    <span>Reddit</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://twitter.com')">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    <span>X (Twitter)</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://instagram.com')">
+                    <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
+                    <span>Instagram</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://amazon.com')">
+                    <i class="fa-brands fa-amazon" style="color: #FF9900;"></i>
+                    <span>Amazon</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://chatgpt.com')">
+                    <i class="fa-solid fa-robot" style="color: #10a37f;"></i>
+                    <span>ChatGPT</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://store.steampowered.com')">
+                    <i class="fa-brands fa-steam" style="color: #66c0f4;"></i>
+                    <span>Steam</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://soundcloud.com')">
+                    <i class="fa-brands fa-soundcloud" style="color: #ff5500;"></i>
+                    <span>SoundCloud</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://pinterest.com')">
+                    <i class="fa-brands fa-pinterest" style="color: #E60023;"></i>
+                    <span>Pinterest</span>
                 </div>
             </div>
-        </div>
 
-        <div id="tvshows-sec" class="dashboard-section" style="display: none; width: 100%; max-width: 800px; flex-direction: column; align-items: center;">
-            <h1 style="text-align: center; font-weight: 900; font-size: 38px; margin-bottom: 5px;">TV Shows</h1>
-            <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Stream serialized television series.</p>
-            
-            <div class="centered-search-container" style="margin-bottom: 25px;">
-                <input id="tvSearchInput" class="centered-search-box" placeholder="Search TV shows..." oninput="filterTvCards()">
-                <button class="centered-go-btn" style="pointer-events: none;"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
-            <div class="section-title"><i class="fa-solid fa-tv"></i> TV Series Library</div>
-            <div class="card-grid" id="tvGrid" style="width: 100%; margin-bottom: 40px;">
-                <!-- Add TV show cards here -->
+            <div class="section-title"><i class="fa-solid fa-dice"></i> Random Apps</div>
+            <div class="card-grid" style="width: 100%; margin-bottom: 40px;">
+                <div class="card" onclick="quickLaunch('https://wikipedia.org')">
+                    <i class="fa-solid fa-globe" style="color: #38bdf8;"></i>
+                    <span>Wikipedia</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://archive.org')">
+                    <i class="fa-solid fa-building-columns" style="color: #facc15;"></i>
+                    <span>Internet Archive</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://codepen.io')">
+                    <i class="fa-brands fa-codepen"></i>
+                    <span>CodePen</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://stackoverflow.com')">
+                    <i class="fa-brands fa-stack-overflow" style="color: #f48024;"></i>
+                    <span>Stack Overflow</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://unsplash.com')">
+                    <i class="fa-solid fa-camera" style="color: #ffffff;"></i>
+                    <span>Unsplash</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://giphy.com')">
+                    <i class="fa-solid fa-face-laugh-squint" style="color: #00ffcc;"></i>
+                    <span>GIPHY</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://speedtest.net')">
+                    <i class="fa-solid fa-gauge-high" style="color: #3b82f6;"></i>
+                    <span>Speedtest</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://chess.com')">
+                    <i class="fa-solid fa-chess-knight" style="color: #7fa650;"></i>
+                    <span>Chess.com</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://genius.com')">
+                    <i class="fa-solid fa-music" style="color: #ffff66;"></i>
+                    <span>Genius</span>
+                </div>
+                <div class="card" onclick="quickLaunch('https://weather.com')">
+                    <i class="fa-solid fa-cloud-sun" style="color: #fbbf24;"></i>
+                    <span>Weather.com</span>
+                </div>
             </div>
         </div>
 
@@ -684,6 +732,20 @@
 
 </div>
 
+<!-- Embedded Frame Modal Overlay -->
+<div id="frame-modal">
+    <div class="frame-header">
+        <div class="frame-title" id="frameModalTitle"><i class="fa-solid fa-globe"></i> Embedded Content</div>
+        <div class="frame-actions">
+            <button class="btn-action btn-accent" onclick="toggleFullScreen()"><i class="fa-solid fa-expand"></i> Full Screen</button>
+            <button class="btn-action" style="border-color: #ef4444; color: #f87171;" onclick="closeFrameModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+        </div>
+    </div>
+    <div class="frame-container" id="frameContainer">
+        <iframe id="mediaModalIframe" allowfullscreen></iframe>
+    </div>
+</div>
+
 <!-- Required external library for proxy HTTP requests -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -726,6 +788,32 @@ function updateSearchEngine() {
 let tabList = [
     { name: 'Home', url: 'dashboard', active: true, isNewTab: false }
 ];
+
+/* --- FRAME MODAL & FULLSCREEN LOGIC --- */
+function openInFrame(title, url) {
+    document.getElementById('frameModalTitle').innerHTML = `<i class="fa-solid fa-globe"></i> ${title}`;
+    document.getElementById('mediaModalIframe').src = url;
+    document.getElementById('frame-modal').classList.add('active');
+}
+
+function closeFrameModal() {
+    document.getElementById('frame-modal').classList.remove('active');
+    document.getElementById('mediaModalIframe').src = '';
+    if (document.fullscreenElement) {
+        document.exitFullscreen().catch(()=>{});
+    }
+}
+
+function toggleFullScreen() {
+    const container = document.getElementById('frameContainer');
+    if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+            alert(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+    } else {
+        document.exitFullscreen().catch(()=>{});
+    }
+}
 
 /* --- TAB CLOAKING PRESETS & LOGIC --- */
 const CLOAK_PRESETS = {
@@ -934,32 +1022,6 @@ function showDashboardSection(secId) {
         const onclickAttr = item.getAttribute('onclick') || '';
         if (onclickAttr.includes(secId.replace('-sec', ''))) {
             item.classList.add('active');
-        }
-    });
-}
-
-function filterMediaCards() {
-    const query = document.getElementById('mediaSearchInput').value.toLowerCase().trim();
-    const cards = document.querySelectorAll('#mediaGrid .movie-card');
-    cards.forEach(card => {
-        const title = card.getAttribute('data-title') || '';
-        if (title.includes(query)) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
-
-function filterTvCards() {
-    const query = document.getElementById('tvSearchInput').value.toLowerCase().trim();
-    const cards = document.querySelectorAll('#tvGrid .movie-card');
-    cards.forEach(card => {
-        const title = card.getAttribute('data-title') || '';
-        if (title.includes(query)) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
         }
     });
 }
