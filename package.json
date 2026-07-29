@@ -1,0 +1,12 @@
+{
+  "name": "galaxy-proxy-browser",
+  "version": "1.0.0",
+  "description": "Hybrid Node.js and Python Proxy Bypass Gateway",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
