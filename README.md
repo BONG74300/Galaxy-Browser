@@ -11,6 +11,8 @@ I hope ❤️
 🌐 Proxy and Web Viewport: The browser includes virtual tab capabilities and frame/viewport embedding designed to handle external URLs and web search engines like DuckDuckGo, Google, and Bing.
 
 Made by ANII/Bong74300
+# Movies 
+Will not last long probably till April 20, 2027! Anyways, The movies is up to date and is free, we also have movie apps on the app page!
 
-# Games 🎮 
-Credits: Gn-math, Truffled.lol, and Dogeub.
+# Apps 
+Has 24 apps that you can Use and they work through an iframe! (Duh!)
