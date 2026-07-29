@@ -12,7 +12,7 @@ I hope ❤️
 
 Made by ANII/Bong74300
 # Movies 
-Will not last long probably till April 20, 2027! Anyways, The movies is up to date and is free, we also have movie apps on the app page!
+Will not last long probably till April 20, 2027! Anyways, The movies is up to date and is free, we also have movie apps on the app page! That Includes Netflix, Hulu, Disney.
 
 # Apps 
 Has 24 apps that you can Use and they work through an iframe! (Duh!)
