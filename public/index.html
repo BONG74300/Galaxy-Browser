@@ -332,7 +332,7 @@
         /* Cards Layout */
         .section-title {
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             text-align: left;
             font-size: 13px;
             text-transform: uppercase;
@@ -345,24 +345,24 @@
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 16px;
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
         }
 
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 20px;
+            padding: 15px;
             font-weight: 700;
             backdrop-filter: blur(8px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
@@ -374,9 +374,76 @@
             box-shadow: 0 5px 15px var(--accent-glow);
         }
 
+        .card img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
         .card i {
-            font-size: 28px;
+            font-size: 32px;
             color: #ffffff;
+        }
+
+        .card span {
+            font-size: 13px;
+            word-break: break-word;
+        }
+
+        /* HTML5 Games Grid Styles */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .game-card {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.4s ease, transform 0.4s ease;
+        }
+
+        .game-card:hover img {
+            filter: blur(8px);
+            transform: scale(1.05);
+        }
+
+        .game-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            width: 90%;
+            z-index: 2;
+        }
+
+        .game-card:hover .game-title {
+            opacity: 1;
         }
 
         /* Settings Console */
@@ -530,6 +597,7 @@
     <h3>Galaxy</h3>
     <div class="sidebar-item active" onclick="switchSidebarTab('home')"><i class="fa-solid fa-house"></i> Home</div>
     <div class="sidebar-item" onclick="switchSidebarTab('apps')"><i class="fa-solid fa-cubes"></i> Apps</div>
+    <div class="sidebar-item" onclick="switchSidebarTab('games')"><i class="fa-solid fa-gamepad"></i> Games</div>
     <div class="sidebar-item" onclick="switchSidebarTab('settings')"><i class="fa-solid fa-sliders"></i> Settings</div>
 </div>
 
@@ -554,22 +622,22 @@
                         <span>DuckDuckGo</span>
                     </div>
                     <div class="card" onclick="quickLaunch('https://youtube.com')">
-                        <i class="fa-brands fa-youtube"></i>
+                        <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
                         <span>YouTube</span>
                     </div>
                     <div class="card" onclick="quickLaunch('https://github.com')">
-                        <i class="fa-brands fa-github"></i>
+                        <i class="fa-brands fa-github" style="color: #ffffff;"></i>
                         <span>GitHub</span>
                     </div>
                     <div class="card" onclick="quickLaunch('https://wikipedia.org')">
-                        <i class="fa-solid fa-book-open"></i>
+                        <i class="fa-solid fa-book-open" style="color: #38bdf8;"></i>
                         <span>Wikipedia</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="apps-sec" class="dashboard-section" style="display: none; width: 100%; max-width: 800px; flex-direction: column; align-items: center;">
+        <div id="apps-sec" class="dashboard-section" style="display: none; width: 100%; max-width: 1000px; flex-direction: column; align-items: center;">
             <h1 style="text-align: center; font-weight: 900; font-size: 38px; margin-bottom: 5px;">Web Applications</h1>
             <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Launch web tools directly.</p>
             
@@ -682,6 +750,17 @@
             </div>
         </div>
 
+        <!-- HTML5 Web Games Section (Genshin Impact & Grand Theft Auto V) -->
+        <div id="games-sec" class="dashboard-section" style="display: none; width: 100%; max-width: 1000px; flex-direction: column; align-items: center;">
+            <h1 style="text-align: center; font-weight: 900; font-size: 38px; margin-bottom: 5px;">HTML5 Web Games Arcade</h1>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Explore popular web games. Hover over any card to reveal its name.</p>
+            
+            <div class="section-title"><i class="fa-solid fa-gamepad"></i> Games Collection (2)</div>
+            <div class="games-grid" id="gamesGrid" style="width: 100%; margin-bottom: 40px;">
+                <!-- Populated dynamically by script -->
+            </div>
+        </div>
+
         <div id="settings-sec" class="dashboard-section" style="display: none; width: 100%; flex-direction: column; align-items: center;">
             <h1 style="text-align: center; font-weight: 900; font-size: 38px;">Browser Settings</h1>
             <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Configure search engine preferences, stealth cloaking, and hotkeys.</p>
@@ -762,6 +841,29 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+// Filtered web games containing only Genshin Impact and Grand Theft Auto V
+const POPULAR_GAMES = [
+    { name: "Genshin Impact", url: "https://genshin.hoyoverse.com", img: "https://images.igdb.com/igdb/image/upload/t_cover_small/co2urxi.png" },
+    { name: "Grand Theft Auto V", url: "https://www.rockstargames.com/gta-v", img: "https://images.igdb.com/igdb/image/upload/t_cover_small/co2lbd.png" }
+];
+
+function populateGamesGrid() {
+    const grid = document.getElementById('gamesGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    POPULAR_GAMES.forEach(game => {
+        let card = document.createElement('div');
+        card.className = 'game-card';
+        card.onclick = () => quickLaunch(game.url);
+        card.innerHTML = `
+            <img src="${game.img}" alt="${game.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80';">
+            <div class="game-title">${game.name}</div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
 // Search Engine Configurations
 const SEARCH_ENGINES = {
     duckduckgo: {
@@ -1147,6 +1249,7 @@ window.onload = function() {
     loadSavedCloak();
     updateSearchEngine();
     renderTabs();
+    populateGamesGrid();
 };
 </script>
 
